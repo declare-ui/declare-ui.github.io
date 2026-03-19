@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-NCVPR28W');</script>
+  <!-- End Google Tag Manager -->
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-566SCJX6LT"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-566SCJX6LT');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Docs — DeclareUI</title>
+  <meta name="description" content="Learn DeclareUI from scratch. Beginner-friendly documentation to go from zero to your first component.">
+  <meta property="og:title" content="Docs — DeclareUI">
+  <meta property="og:description" content="Learn DeclareUI from scratch. Beginner-friendly documentation to go from zero to your first component.">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg-deep: #030712;
+      --bg-card: #0a0f1e;
+      --bg-card-hover: #0f1629;
+      --border-subtle: rgba(56, 189, 248, 0.08);
+      --border-hover: rgba(56, 189, 248, 0.2);
+      --text-primary: #f0f9ff;
+      --text-secondary: #94a3b8;
+      --text-muted: #475569;
+      --cyan: #06b6d4;
+      --blue: #2563eb;
+      --sky: #38bdf8;
+      --react: #38bdf8;
+      --vue: #4ade80;
+      --angular: #f87171;
+      --svelte: #fb923c;
+      --wc: #a78bfa;
+      --ts: #3b82f6;
+      --font-body: 'DM Sans', system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-deep);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* --- Ambient Background --- */
+    .bg-grid {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(56,189,248,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56,189,248,0.03) 1px, transparent 1px);
+      background-size: 80px 80px;
+    }
+
+    .bg-glow {
+      position: fixed; z-index: 0; pointer-events: none;
+      width: 800px; height: 800px; border-radius: 50%;
+      filter: blur(120px); opacity: 0.07;
+    }
+    .bg-glow--cyan { top: -200px; left: -200px; background: var(--cyan); }
+    .bg-glow--blue { bottom: -300px; right: -200px; background: var(--blue); }
+
+    /* --- Layout --- */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
+    .container--narrow { max-width: 860px; }
+
+    /* --- Nav --- */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 1rem 0;
+      background: rgba(3, 7, 18, 0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    nav .container { display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+    .nav-logo svg { height: 32px; width: auto; }
+    .nav-logo span { font-family: var(--font-mono); font-weight: 700; font-size: 1.1rem; color: var(--text-primary); }
+    .nav-logo span em { font-style: normal; color: var(--cyan); }
+    .nav-links { display: flex; align-items: center; gap: 2rem; }
+    .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text-primary); }
+    .nav-links a.active { color: var(--cyan); }
+    .btn-github {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.5rem 1.25rem; border-radius: 8px; font-size: 0.875rem; font-weight: 600;
+      background: rgba(56, 189, 248, 0.1); color: var(--sky); border: 1px solid rgba(56, 189, 248, 0.2);
+      text-decoration: none; transition: all 0.2s;
+    }
+    .btn-github:hover { background: rgba(56, 189, 248, 0.2); border-color: rgba(56, 189, 248, 0.4); }
+    .btn-github svg { width: 18px; height: 18px; }
+
+    /* --- Hero (small) --- */
+    .hero-sm {
+      padding: 8rem 0 4rem; text-align: center;
+      background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(14,165,233,0.06), transparent);
+    }
+    .hero-sm h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; line-height: 1.1;
+      letter-spacing: -0.03em; margin-bottom: 1rem;
+      background: linear-gradient(135deg, #f0f9ff 0%, #bae6fd 40%, #06b6d4 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero-sm p {
+      font-size: 1.15rem; color: var(--text-secondary); max-width: 580px; margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* --- Sections --- */
+    section { padding: 5rem 0; }
+    .section-label {
+      font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600;
+      color: var(--cyan); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 1rem;
+    }
+    .section-title {
+      font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 700;
+      letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 1rem;
+    }
+    .section-desc { font-size: 1.05rem; color: var(--text-secondary); max-width: 600px; line-height: 1.7; margin-bottom: 2.5rem; }
+
+    /* --- Prose --- */
+    .prose { font-size: 1.05rem; color: var(--text-secondary); line-height: 1.8; }
+    .prose p { margin-bottom: 1.25rem; }
+    .prose strong { color: var(--text-primary); font-weight: 600; }
+    .prose a { color: var(--sky); text-decoration: underline; text-underline-offset: 3px; }
+    .prose a:hover { color: var(--cyan); }
+    .prose ul { margin: 1rem 0 1.5rem 1.5rem; }
+    .prose li { margin-bottom: 0.5rem; }
+    .prose code {
+      font-family: var(--font-mono); font-size: 0.875em; color: var(--cyan);
+      background: rgba(6, 182, 212, 0.08); padding: 0.15rem 0.45rem; border-radius: 4px;
+    }
+
+    /* --- Code Blocks --- */
+    .code-block {
+      background: #0c1222; border: 1px solid var(--border-subtle); border-radius: 16px;
+      overflow: hidden; margin: 1.5rem 0;
+    }
+    .code-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.875rem 1.25rem; border-bottom: 1px solid var(--border-subtle);
+      background: rgba(255,255,255,0.02);
+    }
+    .code-header span {
+      font-family: var(--font-mono); font-size: 0.8rem; font-weight: 500; color: var(--text-secondary);
+    }
+    .code-lang {
+      font-family: var(--font-mono); font-size: 0.65rem; font-weight: 600;
+      padding: 0.2rem 0.5rem; border-radius: 4px;
+      text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    pre {
+      padding: 1.5rem; overflow-x: auto; font-family: var(--font-mono);
+      font-size: 0.8rem; line-height: 1.8; color: #cbd5e1; tab-size: 2;
+    }
+    .tok-key { color: #7dd3fc; }
+    .tok-str { color: #86efac; }
+    .tok-val { color: #fbbf24; }
+    .tok-cmt { color: #475569; font-style: italic; }
+    .tok-tag { color: #f472b6; }
+    .tok-attr { color: #c4b5fd; }
+    .tok-kw { color: #c084fc; }
+
+    /* --- Diagram --- */
+    .diagram {
+      display: flex; align-items: center; justify-content: center; gap: 1.5rem;
+      padding: 2.5rem 1.5rem; margin: 2rem 0;
+      background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 16px;
+      flex-wrap: wrap;
+    }
+    .diagram-box {
+      padding: 1rem 1.5rem; border-radius: 12px; text-align: center;
+      font-weight: 600; font-size: 0.95rem;
+    }
+    .diagram-box--yaml { background: rgba(6, 182, 212, 0.1); border: 1px solid rgba(6, 182, 212, 0.2); color: var(--cyan); }
+    .diagram-box--engine { background: rgba(37, 99, 235, 0.1); border: 1px solid rgba(37, 99, 235, 0.2); color: var(--sky); }
+    .diagram-box--code { background: rgba(74, 222, 128, 0.1); border: 1px solid rgba(74, 222, 128, 0.2); color: var(--vue); }
+    .diagram-arrow { color: var(--text-muted); font-size: 1.5rem; }
+
+    /* --- Side-by-side --- */
+    .side-by-side {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 2rem 0;
+    }
+
+    /* --- Annotation block --- */
+    .annotated-code { position: relative; }
+    .annotation {
+      display: block; margin: 0.75rem 0;
+      padding: 0.75rem 1rem; border-radius: 10px;
+      background: rgba(56, 189, 248, 0.05); border-left: 3px solid var(--cyan);
+      font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;
+    }
+    .annotation strong { color: var(--text-primary); }
+
+    /* --- Step Cards --- */
+    .steps { display: flex; flex-direction: column; gap: 1.5rem; margin: 2rem 0; }
+    .step-card {
+      background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 16px;
+      padding: 2rem; transition: all 0.3s;
+    }
+    .step-card:hover { border-color: var(--border-hover); background: var(--bg-card-hover); }
+    .step-num {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px; border-radius: 10px; font-weight: 700; font-size: 1rem;
+      background: linear-gradient(135deg, var(--blue), var(--cyan)); color: white;
+      margin-bottom: 1rem;
+    }
+    .step-card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .step-card p { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 0.75rem; }
+    .step-card .code-block { margin: 1rem 0 0; }
+
+    /* --- Tailwind visual demo --- */
+    .tw-demo {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 2rem 0;
+    }
+    .tw-demo-item {
+      background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px;
+      padding: 1.25rem; display: flex; flex-direction: column; gap: 0.75rem;
+    }
+    .tw-demo-item code {
+      font-family: var(--font-mono); font-size: 0.8rem; color: var(--cyan);
+      background: rgba(6, 182, 212, 0.08); padding: 0.2rem 0.5rem; border-radius: 4px;
+      align-self: flex-start;
+    }
+    .tw-demo-item .preview { border-radius: 8px; padding: 0.75rem 1rem; font-size: 0.9rem; }
+
+    /* --- AI Chat (reused from index) --- */
+    .ai-chat {
+      background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 20px;
+      padding: 2rem; position: relative; max-width: 640px; margin: 2rem 0;
+      box-shadow: 0 0 80px rgba(6, 182, 212, 0.06);
+    }
+    .ai-chat-header {
+      display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem;
+      padding-bottom: 1rem; border-bottom: 1px solid var(--border-subtle);
+    }
+    .ai-avatar {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      display: flex; align-items: center; justify-content: center; font-size: 0.9rem;
+    }
+    .ai-chat-header span { font-weight: 600; font-size: 0.95rem; }
+    .ai-chat-header small { color: var(--text-muted); font-size: 0.75rem; margin-left: auto; }
+    .ai-msg {
+      padding: 1rem 1.25rem; border-radius: 14px; margin-bottom: 0.75rem;
+      font-size: 0.875rem; line-height: 1.6;
+    }
+    .ai-msg--user {
+      background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.12);
+      margin-left: 2rem;
+    }
+    .ai-msg--assistant {
+      background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-subtle);
+      margin-right: 2rem;
+    }
+    .ai-msg--assistant code {
+      font-family: var(--font-mono); font-size: 0.8rem; color: var(--cyan);
+      background: rgba(6, 182, 212, 0.08); padding: 0.15rem 0.4rem; border-radius: 4px;
+    }
+
+    /* --- MCP Config Block --- */
+    .config-block {
+      background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 16px;
+      padding: 1.75rem; margin: 1.5rem 0;
+    }
+    .config-block h4 {
+      font-size: 0.95rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--text-primary);
+    }
+
+    /* --- FAQ --- */
+    .faq { display: flex; flex-direction: column; gap: 0.75rem; margin: 2rem 0; }
+    .faq details {
+      background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 14px;
+      transition: all 0.3s;
+    }
+    .faq details:hover { border-color: var(--border-hover); }
+    .faq details[open] { background: var(--bg-card-hover); border-color: var(--border-hover); }
+    .faq summary {
+      padding: 1.25rem 1.5rem; cursor: pointer; font-weight: 600; font-size: 1rem;
+      list-style: none; display: flex; align-items: center; justify-content: space-between;
+      color: var(--text-primary);
+    }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after {
+      content: '+'; font-size: 1.25rem; color: var(--cyan); font-weight: 400;
+      transition: transform 0.2s;
+    }
+    .faq details[open] summary::after { content: '-'; }
+    .faq .faq-answer {
+      padding: 0 1.5rem 1.25rem; font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7;
+    }
+    .faq .faq-answer a { color: var(--sky); text-decoration: underline; text-underline-offset: 3px; }
+
+    /* --- Buttons --- */
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.875rem 2rem; border-radius: 12px; font-size: 1rem; font-weight: 600;
+      background: linear-gradient(135deg, var(--blue), var(--cyan)); color: white;
+      text-decoration: none; transition: all 0.3s; border: none; cursor: pointer;
+      box-shadow: 0 0 40px rgba(6, 182, 212, 0.2);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 60px rgba(6, 182, 212, 0.3); }
+
+    /* --- Feature Cards (reused) --- */
+    .feature-card {
+      background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 16px;
+      padding: 2rem; transition: all 0.3s; position: relative; overflow: hidden;
+    }
+    .feature-card:hover { border-color: var(--border-hover); background: var(--bg-card-hover); transform: translateY(-2px); }
+    .feature-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .feature-card:hover::before { opacity: 1; }
+
+    /* --- Footer --- */
+    footer {
+      padding: 3rem 0; border-top: 1px solid var(--border-subtle); text-align: center;
+    }
+    footer p { color: var(--text-muted); font-size: 0.85rem; }
+    footer a { color: var(--text-secondary); text-decoration: none; }
+    footer a:hover { color: var(--text-primary); }
+
+    /* --- Responsive --- */
+    @media (max-width: 900px) {
+      .side-by-side { grid-template-columns: 1fr; }
+      .tw-demo { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .diagram { flex-direction: column; }
+      .diagram-arrow { transform: rotate(90deg); }
+    }
+
+    /* --- Scroll Animations --- */
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+  </style>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NCVPR28W"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<div class="bg-grid"></div>
+<div class="bg-glow bg-glow--cyan"></div>
+<div class="bg-glow bg-glow--blue"></div>
+
+<!-- =========== NAV =========== -->
+<nav>
+  <div class="container">
+    <a href="/" class="nav-logo">
+      <svg width="28" height="28" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="98" fill="#060a14"/>
+        <g opacity=".6"><rect x="18" y="62" width="22" height="3" rx="1.5" fill="#64748b"/><rect x="24" y="70" width="16" height="3" rx="1.5" fill="#7dd3fc"/><rect x="24" y="78" width="12" height="3" rx="1.5" fill="#86efac"/><rect x="24" y="86" width="20" height="3" rx="1.5" fill="#fbbf24"/><rect x="18" y="94" width="22" height="3" rx="1.5" fill="#64748b"/><rect x="24" y="102" width="14" height="3" rx="1.5" fill="#7dd3fc"/><rect x="24" y="110" width="18" height="3" rx="1.5" fill="#86efac"/><rect x="18" y="118" width="22" height="3" rx="1.5" fill="#64748b"/><rect x="24" y="126" width="10" height="3" rx="1.5" fill="#fbbf24"/></g>
+        <line x1="52" y1="96" x2="66" y2="96" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round" opacity=".4"/>
+        <g transform="translate(88,96)"><rect x="-20" y="-22" width="40" height="44" rx="6" fill="#0c1631" stroke="#1e3a8a" stroke-width="1.2"/><path d="M-8,-10 L2,0 L-8,10" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/><path d="M2,-10 L12,0 L2,10" fill="none" stroke="#0ea5e9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity=".6"/></g>
+        <line x1="110" y1="80" x2="138" y2="46" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round" opacity=".75"/><line x1="110" y1="88" x2="140" y2="72" stroke="#4ade80" stroke-width="1.8" stroke-linecap="round" opacity=".75"/><line x1="110" y1="96" x2="142" y2="98" stroke="#a78bfa" stroke-width="1.8" stroke-linecap="round" opacity=".75"/><line x1="110" y1="104" x2="140" y2="122" stroke="#f87171" stroke-width="1.8" stroke-linecap="round" opacity=".75"/><line x1="110" y1="112" x2="138" y2="150" stroke="#fb923c" stroke-width="1.8" stroke-linecap="round" opacity=".75"/>
+        <g transform="translate(150,38)"><circle cx="0" cy="0" r="2.5" fill="#38bdf8"/><ellipse cx="0" cy="0" rx="10" ry="3.8" fill="none" stroke="#38bdf8" stroke-width=".9" opacity=".7"/><ellipse cx="0" cy="0" rx="10" ry="3.8" fill="none" stroke="#38bdf8" stroke-width=".9" opacity=".7" transform="rotate(60)"/><ellipse cx="0" cy="0" rx="10" ry="3.8" fill="none" stroke="#38bdf8" stroke-width=".9" opacity=".7" transform="rotate(-60)"/></g>
+        <g transform="translate(152,68)"><path d="M0,-9 L7,5 L0,1 L-7,5 Z" fill="none" stroke="#4ade80" stroke-width="1.3"/></g>
+        <g transform="translate(154,98)"><polygon points="0,-8 7,-4 7,4 0,8 -7,4 -7,-4" fill="none" stroke="#a78bfa" stroke-width="1.2"/></g>
+        <g transform="translate(152,126)"><path d="M0,-9 L8,7 L-8,7 Z" fill="none" stroke="#f87171" stroke-width="1.3"/></g>
+        <g transform="translate(150,158)"><path d="M3,-9 C9,-7 9,-1 3,1 C-3,3 -3,7 3,9" fill="none" stroke="#fb923c" stroke-width="2" stroke-linecap="round"/></g>
+      </svg>
+      <span>declare<em>UI</em></span>
+    </a>
+    <div class="nav-links">
+      <a href="/#how-it-works">How it Works</a>
+      <a href="/#features">Features</a>
+      <a href="/#ai">AI Builder</a>
+      <a href="/docs.html" class="active">Docs</a>
+      <a href="https://github.com/declare-ui" class="btn-github">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- =========== HERO (small) =========== -->
+<section class="hero-sm">
+  <div class="container container--narrow">
+    <h1 class="reveal">Learn DeclareUI</h1>
+    <p class="reveal">Everything you need to go from zero to your first component. No prior experience assumed.</p>
+  </div>
+</section>
+
+<!-- =========== WHAT IS DECLAREUI? =========== -->
+<section id="what-is-declareui">
+  <div class="container container--narrow">
+    <div class="section-label reveal">Section 1</div>
+    <div class="section-title reveal">What is DeclareUI?</div>
+    <div class="prose reveal">
+      <p><strong>DeclareUI is a tool that turns descriptions into real, working interface code.</strong></p>
+      <p>Here's the idea: instead of writing complex code by hand for buttons, forms, alerts, and other interface elements, you <strong>describe what you want</strong> in a simple text format called YAML. DeclareUI reads that description and converts it into professional code that works in popular frameworks like React, Vue, Angular, and others.</p>
+      <p>Think of it as a <strong>translator</strong>. You speak "description," and DeclareUI speaks "code." You focus on <em>what</em> you want to build. DeclareUI figures out <em>how</em> to build it.</p>
+      <p>It's built for every kind of builder -- whether you write code every day, you're a designer with an idea, or you're someone who just wants to create something without climbing a steep learning curve. DeclareUI makes it simpler than you think.</p>
+    </div>
+
+    <div class="diagram reveal">
+      <div class="diagram-box diagram-box--yaml">
+        Your Description<br><small style="font-weight:400;opacity:0.8;">(YAML file)</small>
+      </div>
+      <div class="diagram-arrow">&rarr;</div>
+      <div class="diagram-box diagram-box--engine">
+        DeclareUI<br><small style="font-weight:400;opacity:0.8;">(the translator)</small>
+      </div>
+      <div class="diagram-arrow">&rarr;</div>
+      <div class="diagram-box diagram-box--code">
+        Working Code<br><small style="font-weight:400;opacity:0.8;">(React, Vue, etc.)</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========== YAML IN 2 MINUTES =========== -->
+<section id="yaml-basics">
+  <div class="container container--narrow">
+    <div class="section-label reveal">Section 2</div>
+    <div class="section-title reveal">YAML in 2 Minutes</div>
+    <div class="prose reveal">
+      <p><strong>YAML is just structured text with indentation</strong> -- like a grocery list with sub-items. If you've ever written a to-do list with bullet points, you already get the basic idea.</p>
+    </div>
+
+    <div class="side-by-side reveal">
+      <div class="code-block">
+        <div class="code-header">
+          <span>A grocery list</span>
+          <span class="code-lang" style="background:rgba(251,191,36,0.1);color:#fbbf24;">everyday</span>
+        </div>
+        <pre style="color:var(--text-secondary);">Fruits:
+  - Apples
+  - Bananas
+
+Dairy:
+  - Milk
+  - Cheese
+
+Bakery:
+  - Sourdough bread</pre>
+      </div>
+      <div class="code-block">
+        <div class="code-header">
+          <span>The same thing in YAML</span>
+          <span class="code-lang" style="background:rgba(6,182,212,0.1);color:var(--cyan);">yaml</span>
+        </div>
+        <pre><span class="tok-key">fruits</span>:
+  - <span class="tok-str">Apples</span>
+  - <span class="tok-str">Bananas</span>
+
+<span class="tok-key">dairy</span>:
+  - <span class="tok-str">Milk</span>
+  - <span class="tok-str">Cheese</span>
+
+<span class="tok-key">bakery</span>:
+  - <span class="tok-str">Sourdough bread</span></pre>
+      </div>
+    </div>
+
+    <div class="prose reveal">
+      <p>That's really it. YAML uses a few simple rules:</p>
+      <ul>
+        <li><strong>Indentation matters</strong> -- items nested under a category are indented with spaces (usually 2 spaces).</li>
+        <li><strong>Colons separate keys from values</strong> -- like <code>name: Button</code> means "the name is Button."</li>
+        <li><strong>Dashes mark list items</strong> -- like <code>- Apples</code> means "one item in the list."</li>
+        <li><strong>Use spaces, not tabs</strong> -- YAML is picky about this one thing.</li>
+      </ul>
+      <p>If you've ever edited a settings file, a configuration, or even a recipe in a text document, you already know YAML. It's designed to be readable by humans first, machines second.</p>
+    </div>
+  </div>
+</section>
+
+<!-- =========== TAILWIND IN 2 MINUTES =========== -->
+<section id="tailwind-basics">
+  <div class="container container--narrow">
+    <div class="section-label reveal">Section 3</div>
+    <div class="section-title reveal">Tailwind in 2 Minutes</div>
+    <div class="prose reveal">
+      <p><strong>Tailwind is a way to style things using short, descriptive class names.</strong> Instead of writing traditional style code, you use simple labels that describe what you want something to look like.</p>
+      <p>It reads almost like English. Here are a few examples:</p>
+    </div>
+
+    <div class="tw-demo reveal">
+      <div class="tw-demo-item">
+        <code>bg-blue-600 text-white px-4 py-2</code>
+        <div class="preview" style="background:#2563eb; color:white; padding:0.5rem 1rem; display:inline-block; border-radius:8px; font-weight:600;">
+          Click Me
+        </div>
+        <span style="font-size:0.8rem; color:var(--text-muted);">blue background, white text, horizontal &amp; vertical padding</span>
+      </div>
+      <div class="tw-demo-item">
+        <code>bg-green-500 text-white rounded-full px-6 py-3</code>
+        <div class="preview" style="background:#22c55e; color:white; padding:0.75rem 1.5rem; display:inline-block; border-radius:9999px; font-weight:600;">
+          Success
+        </div>
+        <span style="font-size:0.8rem; color:var(--text-muted);">green background, fully rounded, more padding</span>
+      </div>
+      <div class="tw-demo-item">
+        <code>bg-red-100 text-red-800 border border-red-300</code>
+        <div class="preview" style="background:#fee2e2; color:#991b1b; padding:0.75rem 1rem; display:inline-block; border-radius:8px; border:1px solid #fca5a5;">
+          Error: Something went wrong
+        </div>
+        <span style="font-size:0.8rem; color:var(--text-muted);">light red background, dark red text, red border</span>
+      </div>
+      <div class="tw-demo-item">
+        <code>bg-gray-900 text-white rounded-lg shadow-lg</code>
+        <div class="preview" style="background:#111827; color:white; padding:0.75rem 1rem; display:inline-block; border-radius:8px; box-shadow:0 10px 25px rgba(0,0,0,0.3);">
+          Dark Card
+        </div>
+        <span style="font-size:0.8rem; color:var(--text-muted);">dark background, rounded corners, shadow effect</span>
+      </div>
+    </div>
+
+    <div class="prose reveal">
+      <p>The pattern is always: <strong>what</strong>-<strong>color</strong>-<strong>intensity</strong>. So <code>bg-blue-600</code> means "background, blue, medium-dark." The number goes from 50 (very light) to 950 (very dark).</p>
+      <p>You don't need to memorize any of this. DeclareUI includes Tailwind class names in the YAML templates, and you can always tweak them by reading the class name out loud to yourself -- it usually tells you exactly what it does.</p>
+      <p>Want to go deeper? The <a href="https://tailwindcss.com/docs" target="_blank" rel="noopener">official Tailwind documentation</a> is excellent and full of visual examples.</p>
+    </div>
+  </div>
+</section>
+
+<!-- =========== YOUR FIRST COMPONENT =========== -->
+<section id="first-component">
+  <div class="container container--narrow">
+    <div class="section-label reveal">Section 4</div>
+    <div class="section-title reveal">Your First Component -- Step by Step</div>
+    <div class="prose reveal">
+      <p>Let's build something real. We'll create an <strong>Alert</strong> component -- those little notification boxes you see on websites. It'll take about 5 minutes.</p>
+    </div>
+
+    <div class="steps">
+      <!-- Step 1 -->
+      <div class="step-card reveal">
+        <div class="step-num">1</div>
+        <h3>Install the DeclareUI command-line tool</h3>
+        <p>Open your terminal (or command prompt) and run this command. It installs the DeclareUI tool globally on your computer so you can use it from anywhere.</p>
+        <div class="code-block">
+          <div class="code-header">
+            <span>Terminal</span>
+            <span class="code-lang" style="background:rgba(168,85,247,0.1);color:var(--wc);">shell</span>
+          </div>
+          <pre><span class="tok-cmt"># Install DeclareUI globally</span>
+<span class="tok-val">$</span> npm install -g @declareuihq/cli</pre>
+        </div>
+        <p style="font-size:0.85rem; color:var(--text-muted);">Don't have npm? It comes with <a href="https://nodejs.org" target="_blank" rel="noopener" style="color:var(--sky);">Node.js</a>. Download and install Node.js first.</p>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="step-card reveal">
+        <div class="step-num">2</div>
+        <h3>Create a new project</h3>
+        <p>This creates a folder with everything set up and ready to go, including an example component to start from.</p>
+        <div class="code-block">
+          <div class="code-header">
+            <span>Terminal</span>
+            <span class="code-lang" style="background:rgba(168,85,247,0.1);color:var(--wc);">shell</span>
+          </div>
+          <pre><span class="tok-val">$</span> declareui init my-first-ui
+<span class="tok-val">$</span> cd my-first-ui</pre>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="step-card reveal">
+        <div class="step-num">3</div>
+        <h3>Open the example and understand the structure</h3>
+        <p>Inside your new project, you'll find a file called <code>button.ui.yaml</code>. Open it in any text editor. Let's look at a simplified version and understand each part:</p>
+        <div class="code-block">
+          <div class="code-header">
+            <span>alert.ui.yaml</span>
+            <span class="code-lang" style="background:rgba(6,182,212,0.1);color:var(--cyan);">source</span>
+          </div>
+          <pre><span class="tok-key">component</span>: <span class="tok-str">Alert</span>
+
+<span class="tok-key">props</span>:
+  <span class="tok-key">type</span>:
+    <span class="tok-key">type</span>: <span class="tok-val">enum</span>
+    <span class="tok-key">values</span>: [<span class="tok-str">info</span>, <span class="tok-str">success</span>, <span class="tok-str">warning</span>, <span class="tok-str">error</span>]
+    <span class="tok-key">default</span>: <span class="tok-str">info</span>
+  <span class="tok-key">message</span>:
+    <span class="tok-key">type</span>: <span class="tok-val">string</span>
+    <span class="tok-key">required</span>: <span class="tok-val">true</span>
+
+<span class="tok-key">template</span>:
+  <span class="tok-key">tag</span>: <span class="tok-str">div</span>
+  <span class="tok-key">classes</span>:
+    <span class="tok-key">base</span>: <span class="tok-str">"px-4 py-3 rounded-lg font-medium"</span>
+    <span class="tok-key">variants</span>:
+      <span class="tok-key">type</span>:
+        <span class="tok-key">info</span>: <span class="tok-str">"bg-blue-100 text-blue-800"</span>
+        <span class="tok-key">success</span>: <span class="tok-str">"bg-green-100 text-green-800"</span>
+        <span class="tok-key">warning</span>: <span class="tok-str">"bg-yellow-100 text-yellow-800"</span>
+        <span class="tok-key">error</span>: <span class="tok-str">"bg-red-100 text-red-800"</span>
+  <span class="tok-key">children</span>:
+    - <span class="tok-key">tag</span>: <span class="tok-str">span</span>
+      <span class="tok-key">content</span>: <span class="tok-str">"$props.message"</span></pre>
+        </div>
+
+        <div class="annotation"><strong>component: Alert</strong> -- The name of your component. This becomes the name used in code (like <code>&lt;Alert /&gt;</code>).</div>
+        <div class="annotation"><strong>props</strong> -- These are the inputs your component accepts. Think of them as "settings." Here, you can set the <em>type</em> (info, success, warning, error) and the <em>message</em> text.</div>
+        <div class="annotation"><strong>template &rarr; classes &rarr; base</strong> -- Tailwind styles that always apply: padding, rounded corners, bold text.</div>
+        <div class="annotation"><strong>template &rarr; classes &rarr; variants</strong> -- Different styles depending on which <em>type</em> is chosen. An "info" alert is blue; an "error" alert is red.</div>
+        <div class="annotation"><strong>children &rarr; content: "$props.message"</strong> -- This displays whatever text is passed as the <em>message</em> prop.</div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="step-card reveal">
+        <div class="step-num">4</div>
+        <h3>Build it</h3>
+        <p>Run the build command. DeclareUI reads your YAML and generates real, production-quality code.</p>
+        <div class="code-block">
+          <div class="code-header">
+            <span>Terminal</span>
+            <span class="code-lang" style="background:rgba(168,85,247,0.1);color:var(--wc);">shell</span>
+          </div>
+          <pre><span class="tok-val">$</span> declareui build</pre>
+        </div>
+      </div>
+
+      <!-- Step 5 -->
+      <div class="step-card reveal">
+        <div class="step-num">5</div>
+        <h3>See what came out</h3>
+        <p>DeclareUI generated a complete React component (and Vue, Angular, etc. if configured). Here's the React output:</p>
+        <div class="code-block">
+          <div class="code-header">
+            <span>Alert.tsx</span>
+            <span class="code-lang" style="background:rgba(56,189,248,0.1);color:var(--react);">react output</span>
+          </div>
+          <pre><span class="tok-kw">import</span> { forwardRef } <span class="tok-kw">from</span> <span class="tok-str">'react'</span>;
+<span class="tok-kw">import</span> { cn } <span class="tok-kw">from</span> <span class="tok-str">'../utils/cn'</span>;
+
+<span class="tok-kw">export interface</span> <span class="tok-tag">AlertProps</span> {
+  type?: <span class="tok-str">'info'</span> | <span class="tok-str">'success'</span> | <span class="tok-str">'warning'</span> | <span class="tok-str">'error'</span>;
+  message: <span class="tok-val">string</span>;
+}
+
+<span class="tok-kw">export const</span> Alert = forwardRef&lt;
+  HTMLDivElement, AlertProps
+&gt;(({ type = <span class="tok-str">'info'</span>, message }, ref) =&gt; {
+  <span class="tok-kw">const</span> classes = cn(
+    <span class="tok-str">'px-4 py-3 rounded-lg font-medium'</span>,
+    {
+      info: <span class="tok-str">'bg-blue-100 text-blue-800'</span>,
+      success: <span class="tok-str">'bg-green-100 text-green-800'</span>,
+      warning: <span class="tok-str">'bg-yellow-100 text-yellow-800'</span>,
+      error: <span class="tok-str">'bg-red-100 text-red-800'</span>,
+    }[type]
+  );
+
+  <span class="tok-kw">return</span> (
+    <span class="tok-tag">&lt;div</span> <span class="tok-attr">ref</span>={ref} <span class="tok-attr">className</span>={classes}<span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;span&gt;</span>{message}<span class="tok-tag">&lt;/span&gt;</span>
+    <span class="tok-tag">&lt;/div&gt;</span>
+  );
+});</pre>
+        </div>
+      </div>
+
+      <!-- Step 6 -->
+      <div class="step-card reveal">
+        <div class="step-num">6</div>
+        <h3>You just built a professional UI component!</h3>
+        <p>That's it. You described what you wanted in plain, readable YAML, and DeclareUI generated production-ready code with proper TypeScript types, accessibility support, and framework-native patterns.</p>
+        <p>From here, you can change the colors, add new variants, or create entirely new components. The process is always the same: <strong>describe, build, ship.</strong></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========== AI BUILDER =========== -->
+<section id="ai-builder" style="background: linear-gradient(180deg, transparent, rgba(14, 165, 233, 0.03), transparent); border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle);">
+  <div class="container container--narrow">
+    <div class="section-label reveal">Section 5</div>
+    <div class="section-title reveal">Using AI to Build Components</div>
+    <div class="prose reveal">
+      <p><strong>Don't want to write YAML by hand? Just describe what you need in plain language.</strong></p>
+      <p>AI tools like Claude can generate DeclareUI components for you. You describe what you want in a conversation, and the AI writes the YAML. DeclareUI then compiles it into real code. You just describe what you want.</p>
+    </div>
+
+    <div class="ai-chat reveal">
+      <div class="ai-chat-header">
+        <div class="ai-avatar">&#9672;</div>
+        <span>Claude + DeclareUI</span>
+        <small>via MCP</small>
+      </div>
+      <div class="ai-msg ai-msg--user">
+        I need a notification banner that can be an info, warning, or error type. It should have a title, a message, and a dismiss button.
+      </div>
+      <div class="ai-msg ai-msg--assistant">
+        I'll create that for you. Let me generate the YAML component...<br><br>
+        Created <code>notification-banner.ui.yaml</code> with:<br>
+        &bull;&ensp;Props: <code>type</code>, <code>title</code>, <code>message</code>, <code>dismissible</code><br>
+        &bull;&ensp;Events: <code>dismiss</code><br>
+        &bull;&ensp;Variants: info (blue), warning (amber), error (red)<br><br>
+        Run <code>declareui build</code> to compile it!
+      </div>
+    </div>
+
+    <div class="prose reveal">
+      <p><strong>How does this work?</strong> DeclareUI has an MCP Server (Model Context Protocol). In simple terms, it's a bridge that lets AI tools talk directly to DeclareUI. The AI can look up the DeclareUI documentation, understand the YAML format, and generate valid components -- all within a conversation.</p>
+    </div>
+
+    <div class="config-block reveal">
+      <h4>Setting it up with Claude Desktop</h4>
+      <p style="font-size:0.9rem; color:var(--text-secondary); margin-bottom:1rem;">Add this to your Claude Desktop configuration file to enable the DeclareUI integration:</p>
+      <div class="code-block" style="margin:0;">
+        <div class="code-header">
+          <span>claude_desktop_config.json</span>
+          <span class="code-lang" style="background:rgba(251,146,60,0.1);color:var(--svelte);">json</span>
+        </div>
+        <pre>{
+  <span class="tok-key">"mcpServers"</span>: {
+    <span class="tok-key">"declareui"</span>: {
+      <span class="tok-key">"command"</span>: <span class="tok-str">"npx"</span>,
+      <span class="tok-key">"args"</span>: [<span class="tok-str">"@declareuihq/mcp-server"</span>]
+    }
+  }
+}</pre>
+      </div>
+    </div>
+
+    <div class="prose reveal">
+      <p>Once configured, you can ask Claude to create, modify, or explain DeclareUI components. The AI writes the YAML, DeclareUI compiles the code. You just describe what you want.</p>
+    </div>
+  </div>
+</section>
+
+<!-- =========== FAQ =========== -->
+<section id="faq">
+  <div class="container container--narrow">
+    <div class="section-label reveal">Section 6</div>
+    <div class="section-title reveal">Frequently Asked Questions</div>
+
+    <div class="faq">
+      <details class="reveal">
+        <summary>Do I need to know how to code?</summary>
+        <div class="faq-answer">
+          Not necessarily. If you can edit a text file, you can use DeclareUI. The YAML format is designed to be readable by anyone -- it looks more like a structured document than traditional programming code. That said, some familiarity with the terminal (running commands) is helpful for the build step. And if you use the AI integration, you can skip writing YAML entirely.
+        </div>
+      </details>
+
+      <details class="reveal">
+        <summary>What is React / Vue / Angular?</summary>
+        <div class="faq-answer">
+          These are <strong>frameworks</strong> -- toolkits that developers use to build the interactive parts of websites and apps. Think of them as different "languages" that browsers understand. Different teams prefer different frameworks. DeclareUI's superpower is that you write your component description <em>once</em>, and it generates code that works in <em>any</em> of these frameworks. So your team can use whatever they prefer.
+        </div>
+      </details>
+
+      <details class="reveal">
+        <summary>Is this free?</summary>
+        <div class="faq-answer">
+          Yes. DeclareUI is open source under the <strong>MIT license</strong>, which is one of the most permissive licenses in software. You can use it for personal projects, commercial products, or anything in between -- at no cost, forever.
+        </div>
+      </details>
+
+      <details class="reveal">
+        <summary>Can I use this at my company?</summary>
+        <div class="faq-answer">
+          Absolutely. The MIT license allows commercial use with no restrictions. Many teams use DeclareUI to maintain a consistent component library across multiple projects that use different frameworks.
+        </div>
+      </details>
+
+      <details class="reveal">
+        <summary>What if I get stuck?</summary>
+        <div class="faq-answer">
+          You have several options:
+          <ul style="margin-top:0.5rem;">
+            <li>Open an issue on <a href="https://github.com/declare-ui/core/issues" target="_blank" rel="noopener">GitHub</a> -- the community and maintainers are friendly and responsive.</li>
+            <li>Browse existing issues -- someone may have already asked your question.</li>
+            <li>Ask an AI assistant (like Claude) with the MCP integration -- it can help troubleshoot and explain errors.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="reveal">
+        <summary>How is this different from v0.dev or Bolt?</summary>
+        <div class="faq-answer">
+          Tools like v0.dev and Bolt generate one-time code -- you get a snapshot that you then maintain manually. DeclareUI takes a different approach: you create <strong>reusable, testable components</strong> from a single YAML source that lives in your codebase. When you update the YAML, you rebuild and get updated code for <em>every</em> framework. It's a source-of-truth approach rather than a one-shot generation.
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- =========== CTA =========== -->
+<section style="padding:5rem 0;">
+  <div class="container" style="text-align:center;">
+    <div class="section-title reveal">Ready to build something?</div>
+    <p class="reveal" style="font-size:1.05rem; color:var(--text-secondary); max-width:500px; margin:0 auto 2rem; line-height:1.7;">Go back to the top and follow the step-by-step guide, or jump right in with the CLI.</p>
+    <div class="reveal">
+      <a href="#first-component" class="btn-primary">Start the Tutorial &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- =========== FOOTER =========== -->
+<footer>
+  <div class="container">
+    <p>Built with care by the DeclareUI community. <a href="https://github.com/declare-ui">GitHub</a> &middot; <a href="/docs.html">Docs</a> &middot; MIT License</p>
+  </div>
+</footer>
+
+<!-- =========== SCROLL REVEAL =========== -->
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
