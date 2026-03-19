@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DeclareUI — Write once in YAML. Ship everywhere in native code.</title>
+  <meta name="description" content="Define UI components in YAML/JSON. Compile to React, Vue, Angular, Svelte, Web Components & vanilla JS/TS with native Tailwind support.">
+  <meta property="og:title" content="DeclareUI — Declarative UI Components for Every Framework">
+  <meta property="og:description" content="Write once in YAML. Ship everywhere in native code.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg-deep: #030712;
+      --bg-card: #0a0f1e;
+      --bg-card-hover: #0f1629;
+      --border-subtle: rgba(56, 189, 248, 0.08);
+      --border-hover: rgba(56, 189, 248, 0.2);
+      --text-primary: #f0f9ff;
+      --text-secondary: #94a3b8;
+      --text-muted: #475569;
+      --cyan: #06b6d4;
+      --blue: #2563eb;
+      --sky: #38bdf8;
+      --react: #38bdf8;
+      --vue: #4ade80;
+      --angular: #f87171;
+      --svelte: #fb923c;
+      --wc: #a78bfa;
+      --ts: #3b82f6;
+      --font-body: 'DM Sans', system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-deep);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── Ambient Background ─── */
+    .bg-grid {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(56,189,248,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56,189,248,0.03) 1px, transparent 1px);
+      background-size: 80px 80px;
+    }
+
+    .bg-glow {
+      position: fixed; z-index: 0; pointer-events: none;
+      width: 800px; height: 800px; border-radius: 50%;
+      filter: blur(120px); opacity: 0.07;
+    }
+    .bg-glow--cyan { top: -200px; left: -200px; background: var(--cyan); }
+    .bg-glow--blue { bottom: -300px; right: -200px; background: var(--blue); }
+
+    /* ─── Layout ─── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
+
+    /* ─── Nav ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 1rem 0;
+      background: rgba(3, 7, 18, 0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    nav .container { display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+    .nav-logo svg { height: 32px; width: auto; }
+    .nav-logo span { font-family: var(--font-mono); font-weight: 700; font-size: 1.1rem; color: var(--text-primary); }
+    .nav-logo span em { font-style: normal; color: var(--cyan); }
+    .nav-links { display: flex; align-items: center; gap: 2rem; }
+    .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text-primary); }
+    .btn-github {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.5rem 1.25rem; border-radius: 8px; font-size: 0.875rem; font-weight: 600;
+      background: rgba(56, 189, 248, 0.1); color: var(--sky); border: 1px solid rgba(56, 189, 248, 0.2);
+      text-decoration: none; transition: all 0.2s;
+    }
+    .btn-github:hover { background: rgba(56, 189, 248, 0.2); border-color: rgba(56, 189, 248, 0.4); }
+    .btn-github svg { width: 18px; height: 18px; }
+
+    /* ─── Hero ─── */
+    .hero {
+      padding: 10rem 0 6rem; text-align: center;
+      background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(14,165,233,0.06), transparent);
+    }
+    .hero-logo { margin-bottom: 2.5rem; }
+    .hero-logo svg { width: 140px; height: 140px; filter: drop-shadow(0 0 60px rgba(6,182,212,0.15)); }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.35rem 1rem; border-radius: 100px; font-size: 0.8rem; font-weight: 500;
+      background: rgba(56, 189, 248, 0.08); color: var(--sky); border: 1px solid rgba(56, 189, 248, 0.15);
+      margin-bottom: 2rem; letter-spacing: 0.02em;
+    }
+    .hero-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); animation: pulse-dot 2s infinite; }
+    @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 700; line-height: 1.1;
+      letter-spacing: -0.03em; margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, #f0f9ff 0%, #bae6fd 40%, #06b6d4 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero p {
+      font-size: 1.25rem; color: var(--text-secondary); max-width: 640px; margin: 0 auto 3rem;
+      line-height: 1.7;
+    }
+    .hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.875rem 2rem; border-radius: 12px; font-size: 1rem; font-weight: 600;
+      background: linear-gradient(135deg, var(--blue), var(--cyan)); color: white;
+      text-decoration: none; transition: all 0.3s; border: none; cursor: pointer;
+      box-shadow: 0 0 40px rgba(6, 182, 212, 0.2);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 60px rgba(6, 182, 212, 0.3); }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.875rem 2rem; border-radius: 12px; font-size: 1rem; font-weight: 600;
+      background: transparent; color: var(--text-primary); text-decoration: none;
+      border: 1px solid var(--border-hover); transition: all 0.3s;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.03); border-color: rgba(56, 189, 248, 0.4); }
+
+    /* ─── Framework Ticker ─── */
+    .frameworks-strip {
+      display: flex; justify-content: center; gap: 3rem; padding: 4rem 0 2rem;
+      flex-wrap: wrap;
+    }
+    .fw-item {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-family: var(--font-mono); font-size: 0.85rem; font-weight: 500;
+      opacity: 0.5; transition: opacity 0.3s;
+    }
+    .fw-item:hover { opacity: 1; }
+    .fw-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+    /* ─── Sections ─── */
+    section { padding: 6rem 0; }
+    .section-label {
+      font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600;
+      color: var(--cyan); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 1rem;
+    }
+    .section-title {
+      font-size: clamp(1.75rem, 4vw, 2.75rem); font-weight: 700;
+      letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 1rem;
+    }
+    .section-desc { font-size: 1.1rem; color: var(--text-secondary); max-width: 600px; line-height: 1.7; margin-bottom: 3rem; }
+
+    /* ─── How It Works ─── */
+    .flow {
+      display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 1rem; align-items: start;
+      margin-top: 3rem;
+    }
+    .flow-step {
+      background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 16px;
+      padding: 2rem; transition: all 0.3s;
+    }
+    .flow-step:hover { border-color: var(--border-hover); background: var(--bg-card-hover); }
+    .flow-step-num {
+      font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700;
+      color: var(--cyan); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 1rem;
+    }
+    .flow-step h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .flow-step p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; }
+    .flow-arrow {
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-muted); font-size: 1.5rem; padding-top: 3rem;
+    }
+
+    /* ─── Code Preview ─── */
+    .code-section { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+    .code-block {
+      background: #0c1222; border: 1px solid var(--border-subtle); border-radius: 16px;
+      overflow: hidden;
+    }
+    .code-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.875rem 1.25rem; border-bottom: 1px solid var(--border-subtle);
+      background: rgba(255,255,255,0.02);
+    }
+    .code-header span {
+      font-family: var(--font-mono); font-size: 0.8rem; font-weight: 500; color: var(--text-secondary);
+    }
+    .code-lang {
+      font-family: var(--font-mono); font-size: 0.65rem; font-weight: 600;
+      padding: 0.2rem 0.5rem; border-radius: 4px;
+      text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    pre {
+      padding: 1.5rem; overflow-x: auto; font-family: var(--font-mono);
+      font-size: 0.8rem; line-height: 1.8; color: #cbd5e1; tab-size: 2;
+    }
+    .tok-key { color: #7dd3fc; }
+    .tok-str { color: #86efac; }
+    .tok-val { color: #fbbf24; }
+    .tok-cmt { color: #475569; font-style: italic; }
+    .tok-tag { color: #f472b6; }
+    .tok-attr { color: #c4b5fd; }
+    .tok-kw { color: #c084fc; }
+
+    /* ─── Features Grid ─── */
+    .features-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+    }
+    .feature-card {
+      background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 16px;
+      padding: 2rem; transition: all 0.3s; position: relative; overflow: hidden;
+    }
+    .feature-card:hover { border-color: var(--border-hover); background: var(--bg-card-hover); transform: translateY(-2px); }
+    .feature-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .feature-card:hover::before { opacity: 1; }
+    .feature-icon {
+      width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1.25rem; font-size: 1.5rem;
+      background: rgba(56, 189, 248, 0.06); border: 1px solid rgba(56, 189, 248, 0.1);
+    }
+    .feature-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .feature-card p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; }
+
+    /* ─── AI Section (special) ─── */
+    .ai-section {
+      background: linear-gradient(180deg, transparent, rgba(14, 165, 233, 0.03), transparent);
+      border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle);
+      padding: 6rem 0;
+    }
+    .ai-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+    .ai-chat {
+      background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 20px;
+      padding: 2rem; position: relative;
+      box-shadow: 0 0 80px rgba(6, 182, 212, 0.06);
+    }
+    .ai-chat-header {
+      display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem;
+      padding-bottom: 1rem; border-bottom: 1px solid var(--border-subtle);
+    }
+    .ai-avatar {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      display: flex; align-items: center; justify-content: center; font-size: 0.9rem;
+    }
+    .ai-chat-header span { font-weight: 600; font-size: 0.95rem; }
+    .ai-chat-header small { color: var(--text-muted); font-size: 0.75rem; margin-left: auto; }
+    .ai-msg {
+      padding: 1rem 1.25rem; border-radius: 14px; margin-bottom: 0.75rem;
+      font-size: 0.875rem; line-height: 1.6;
+    }
+    .ai-msg--user {
+      background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.12);
+      margin-left: 2rem;
+    }
+    .ai-msg--assistant {
+      background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-subtle);
+      margin-right: 2rem;
+    }
+    .ai-msg--assistant code {
+      font-family: var(--font-mono); font-size: 0.8rem; color: var(--cyan);
+      background: rgba(6, 182, 212, 0.08); padding: 0.15rem 0.4rem; border-radius: 4px;
+    }
+    .ai-connector {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.875rem 1.25rem; border-radius: 12px;
+      background: var(--bg-card); border: 1px solid var(--border-subtle);
+      margin-bottom: 0.75rem; transition: all 0.3s;
+    }
+    .ai-connector:hover { border-color: var(--border-hover); }
+    .ai-connector-icon {
+      width: 36px; height: 36px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; font-weight: 700;
+    }
+    .ai-connector h4 { font-size: 0.95rem; font-weight: 600; }
+    .ai-connector p { font-size: 0.78rem; color: var(--text-secondary); }
+
+    /* ─── Install ─── */
+    .install-block {
+      max-width: 600px; margin: 3rem auto 0; text-align: center;
+    }
+    .install-cmd {
+      display: flex; align-items: center; justify-content: center; gap: 1rem;
+      background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 14px;
+      padding: 1.25rem 2rem; font-family: var(--font-mono); font-size: 1rem; color: var(--sky);
+    }
+    .install-cmd .prompt { color: var(--text-muted); }
+
+    /* ─── Footer ─── */
+    footer {
+      padding: 3rem 0; border-top: 1px solid var(--border-subtle); text-align: center;
+    }
+    footer p { color: var(--text-muted); font-size: 0.85rem; }
+    footer a { color: var(--text-secondary); text-decoration: none; }
+    footer a:hover { color: var(--text-primary); }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 900px) {
+      .flow { grid-template-columns: 1fr; }
+      .flow-arrow { transform: rotate(90deg); padding: 0; }
+      .code-section { grid-template-columns: 1fr; }
+      .features-grid { grid-template-columns: 1fr; }
+      .ai-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+
+    /* ─── Scroll Animations ─── */
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+  </style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-glow bg-glow--cyan"></div>
+<div class="bg-glow bg-glow--blue"></div>
+
+<!-- ═══════════ NAV ═══════════ -->
+<nav>
+  <div class="container">
+    <a href="#" class="nav-logo">
+      <svg width="28" height="28" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="256" cy="256" r="250" fill="#030712"/>
+        <g transform="translate(256,256)"><polygon points="-66,0 0,-90 0,0 -66,40" fill="#1E3A8A" opacity=".95"/><polygon points="0,-90 66,0 66,40 0,0" fill="#0EA5E9" opacity=".95"/><polygon points="-66,0 0,-90 66,0 0,-40" fill="#38BDF8" opacity=".9"/><polygon points="-66,40 0,0 66,40 0,80" fill="#0F172A" opacity=".8"/></g>
+        <text x="256" y="268" font-family="sans-serif" font-size="56" font-weight="700" fill="#F0F9FF" text-anchor="middle" dominant-baseline="middle" opacity=".9">D</text>
+        <g opacity=".7"><line x1="322" y1="230" x2="420" y2="165" stroke="#38BDF8" stroke-width="2.5"/><line x1="322" y1="248" x2="420" y2="220" stroke="#4ADE80" stroke-width="2.5"/><line x1="322" y1="260" x2="420" y2="262" stroke="#A78BFA" stroke-width="2.5"/><line x1="322" y1="275" x2="420" y2="310" stroke="#F87171" stroke-width="2.5"/><line x1="322" y1="286" x2="420" y2="360" stroke="#FB923C" stroke-width="2.5"/></g>
+      </svg>
+      <span>declare<em>UI</em></span>
+    </a>
+    <div class="nav-links">
+      <a href="#how-it-works">How it Works</a>
+      <a href="#features">Features</a>
+      <a href="#ai">AI &amp; MCP</a>
+      <a href="https://github.com/declare-ui" class="btn-github">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-logo reveal">
+      <svg width="140" height="140" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="h-fl" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1E3A8A"/><stop offset="100%" stop-color="#0F172A"/></linearGradient>
+          <linearGradient id="h-fr" x1="100%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#0EA5E9"/><stop offset="100%" stop-color="#1E40AF"/></linearGradient>
+          <linearGradient id="h-ft" x1="50%" y1="0%" x2="50%" y2="100%"><stop offset="0%" stop-color="#38BDF8"/><stop offset="100%" stop-color="#2563EB"/></linearGradient>
+          <linearGradient id="h-br" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#38BDF8"/><stop offset="100%" stop-color="#38BDF8" stop-opacity="0"/></linearGradient>
+          <linearGradient id="h-bg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#4ADE80"/><stop offset="100%" stop-color="#4ADE80" stop-opacity="0"/></linearGradient>
+          <linearGradient id="h-bp" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#A78BFA"/><stop offset="100%" stop-color="#A78BFA" stop-opacity="0"/></linearGradient>
+          <linearGradient id="h-brd" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#F87171"/><stop offset="100%" stop-color="#F87171" stop-opacity="0"/></linearGradient>
+          <linearGradient id="h-bo" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#FB923C"/><stop offset="100%" stop-color="#FB923C" stop-opacity="0"/></linearGradient>
+          <linearGradient id="h-bi" x1="0%" y1="50%" x2="100%" y2="50%"><stop offset="0%" stop-color="#F8FAFC" stop-opacity="0"/><stop offset="100%" stop-color="#F8FAFC" stop-opacity="0.9"/></linearGradient>
+          <filter id="h-glow"><feGaussianBlur stdDeviation="4" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <circle cx="256" cy="256" r="250" fill="#030712"/>
+        <g opacity="0.04"><line x1="56" y1="56" x2="56" y2="456" stroke="#38BDF8" stroke-width=".5"/><line x1="156" y1="56" x2="156" y2="456" stroke="#38BDF8" stroke-width=".5"/><line x1="256" y1="56" x2="256" y2="456" stroke="#38BDF8" stroke-width=".5"/><line x1="356" y1="56" x2="356" y2="456" stroke="#38BDF8" stroke-width=".5"/><line x1="456" y1="56" x2="456" y2="456" stroke="#38BDF8" stroke-width=".5"/><line x1="56" y1="56" x2="456" y2="56" stroke="#38BDF8" stroke-width=".5"/><line x1="56" y1="156" x2="456" y2="156" stroke="#38BDF8" stroke-width=".5"/><line x1="56" y1="256" x2="456" y2="256" stroke="#38BDF8" stroke-width=".5"/><line x1="56" y1="356" x2="456" y2="356" stroke="#38BDF8" stroke-width=".5"/><line x1="56" y1="456" x2="456" y2="456" stroke="#38BDF8" stroke-width=".5"/></g>
+        <g filter="url(#h-glow)"><line x1="60" y1="256" x2="190" y2="256" stroke="url(#h-bi)" stroke-width="3" stroke-linecap="round"/><text x="72" y="240" font-family="monospace" font-size="18" fill="#94A3B8" opacity=".6">{</text><text x="72" y="280" font-family="monospace" font-size="18" fill="#94A3B8" opacity=".6">}</text></g>
+        <g transform="translate(256,256)"><polygon points="-66,0 0,-90 0,0 -66,40" fill="url(#h-fl)" opacity=".95"/><polygon points="0,-90 66,0 66,40 0,0" fill="url(#h-fr)" opacity=".95"/><polygon points="-66,0 0,-90 66,0 0,-40" fill="url(#h-ft)" opacity=".9"/><polygon points="-66,40 0,0 66,40 0,80" fill="#0F172A" opacity=".8"/><line x1="0" y1="-90" x2="-66" y2="0" stroke="#38BDF8" stroke-width="1" opacity=".6"/><line x1="0" y1="-90" x2="66" y2="0" stroke="#38BDF8" stroke-width="1" opacity=".4"/><line x1="-66" y1="0" x2="-66" y2="40" stroke="#1E40AF" stroke-width="1" opacity=".5"/><line x1="66" y1="0" x2="66" y2="40" stroke="#0EA5E9" stroke-width="1" opacity=".5"/></g>
+        <text x="256" y="268" font-family="sans-serif" font-size="56" font-weight="700" fill="#F0F9FF" text-anchor="middle" dominant-baseline="middle" opacity=".9">D</text>
+        <g filter="url(#h-glow)"><line x1="322" y1="230" x2="450" y2="150" stroke="url(#h-br)" stroke-width="2.5" stroke-linecap="round"/><circle cx="454" cy="148" r="4" fill="#38BDF8" opacity=".8"/><line x1="322" y1="245" x2="450" y2="210" stroke="url(#h-bg)" stroke-width="2.5" stroke-linecap="round"/><circle cx="454" cy="209" r="4" fill="#4ADE80" opacity=".8"/><line x1="322" y1="256" x2="450" y2="260" stroke="url(#h-bp)" stroke-width="2.5" stroke-linecap="round"/><circle cx="454" cy="260" r="4" fill="#A78BFA" opacity=".8"/><line x1="322" y1="270" x2="450" y2="310" stroke="url(#h-brd)" stroke-width="2.5" stroke-linecap="round"/><circle cx="454" cy="311" r="4" fill="#F87171" opacity=".8"/><line x1="322" y1="282" x2="450" y2="368" stroke="url(#h-bo)" stroke-width="2.5" stroke-linecap="round"/><circle cx="454" cy="370" r="4" fill="#FB923C" opacity=".8"/></g>
+        <circle cx="256" cy="256" r="100" fill="#0EA5E9" opacity=".04"/><circle cx="256" cy="256" r="60" fill="#38BDF8" opacity=".06"/>
+      </svg>
+    </div>
+    <div class="hero-badge reveal"><span class="dot"></span> Open Source &middot; MIT License</div>
+    <h1 class="reveal">Write once in YAML.<br>Ship everywhere in native code.</h1>
+    <p class="reveal">Define UI components declaratively in YAML or JSON. Compile to React, Vue, Angular, Svelte, Web Components and vanilla JS/TS — with Tailwind built in.</p>
+    <div class="hero-actions reveal">
+      <a href="#how-it-works" class="btn-primary">Get Started &rarr;</a>
+      <a href="https://github.com/declare-ui" class="btn-secondary">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        View on GitHub
+      </a>
+    </div>
+    <div class="frameworks-strip reveal">
+      <span class="fw-item"><span class="fw-dot" style="background:var(--react)"></span> React</span>
+      <span class="fw-item"><span class="fw-dot" style="background:var(--vue)"></span> Vue</span>
+      <span class="fw-item"><span class="fw-dot" style="background:var(--angular)"></span> Angular</span>
+      <span class="fw-item"><span class="fw-dot" style="background:var(--svelte)"></span> Svelte</span>
+      <span class="fw-item"><span class="fw-dot" style="background:var(--wc)"></span> Web Components</span>
+      <span class="fw-item"><span class="fw-dot" style="background:var(--ts)"></span> TypeScript</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ HOW IT WORKS ═══════════ -->
+<section id="how-it-works">
+  <div class="container">
+    <div class="section-label reveal">How it Works</div>
+    <div class="section-title reveal">Three steps. Every framework.</div>
+    <div class="section-desc reveal">One YAML file becomes native, idiomatic components for every target — not wrappers, not hacks.</div>
+
+    <div class="flow">
+      <div class="flow-step reveal">
+        <div class="flow-step-num">01 &mdash; Define</div>
+        <h3>Declare in YAML</h3>
+        <p>Props, state, events, Tailwind classes, slots, lifecycle, and even tests — all in a single <code>.ui.yaml</code> file.</p>
+      </div>
+      <div class="flow-arrow reveal reveal-delay-1">&rarr;</div>
+      <div class="flow-step reveal reveal-delay-1">
+        <div class="flow-step-num">02 &mdash; Compile</div>
+        <h3>Run the CLI</h3>
+        <p>The DeclareUI compiler parses, validates, optimizes, and generates code for each target in parallel. Tailwind is resolved at build-time.</p>
+      </div>
+      <div class="flow-arrow reveal reveal-delay-2">&rarr;</div>
+      <div class="flow-step reveal reveal-delay-2">
+        <div class="flow-step-num">03 &mdash; Ship</div>
+        <h3>Use native components</h3>
+        <p>Import a real React component, a Vue SFC, a Svelte component, or a Custom Element. Full TypeScript types included.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CODE PREVIEW ═══════════ -->
+<section id="code">
+  <div class="container">
+    <div class="section-label reveal">See it in action</div>
+    <div class="section-title reveal">One source. Native output.</div>
+    <div class="section-desc reveal">A single YAML definition compiles to idiomatic code for each framework.</div>
+
+    <div class="code-section">
+      <div class="code-block reveal">
+        <div class="code-header">
+          <span>button.ui.yaml</span>
+          <span class="code-lang" style="background:rgba(6,182,212,0.1);color:var(--cyan);">source</span>
+        </div>
+        <pre><span class="tok-key">component</span>: <span class="tok-str">Button</span>
+
+<span class="tok-key">props</span>:
+  <span class="tok-key">variant</span>:
+    <span class="tok-key">type</span>: <span class="tok-val">enum</span>
+    <span class="tok-key">values</span>: [<span class="tok-str">primary</span>, <span class="tok-str">secondary</span>, <span class="tok-str">ghost</span>]
+    <span class="tok-key">default</span>: <span class="tok-str">primary</span>
+  <span class="tok-key">label</span>:
+    <span class="tok-key">type</span>: <span class="tok-val">string</span>
+    <span class="tok-key">required</span>: <span class="tok-val">true</span>
+
+<span class="tok-key">template</span>:
+  <span class="tok-key">tag</span>: <span class="tok-str">button</span>
+  <span class="tok-key">classes</span>:
+    <span class="tok-key">base</span>: <span class="tok-str">"px-4 py-2 rounded-lg font-medium"</span>
+    <span class="tok-key">variants</span>:
+      <span class="tok-key">variant</span>:
+        <span class="tok-key">primary</span>: <span class="tok-str">"bg-blue-600 text-white"</span>
+        <span class="tok-key">secondary</span>: <span class="tok-str">"bg-gray-100 text-gray-900"</span>
+  <span class="tok-key">children</span>:
+    - <span class="tok-key">tag</span>: <span class="tok-str">span</span>
+      <span class="tok-key">content</span>: <span class="tok-str">"$props.label"</span></pre>
+      </div>
+      <div class="code-block reveal reveal-delay-1">
+        <div class="code-header">
+          <span>Button.tsx</span>
+          <span class="code-lang" style="background:rgba(56,189,248,0.1);color:var(--react);">react output</span>
+        </div>
+        <pre><span class="tok-kw">import</span> { forwardRef } <span class="tok-kw">from</span> <span class="tok-str">'react'</span>;
+<span class="tok-kw">import</span> { cn } <span class="tok-kw">from</span> <span class="tok-str">'../utils/cn'</span>;
+
+<span class="tok-kw">export interface</span> <span class="tok-tag">ButtonProps</span> {
+  variant?: <span class="tok-str">'primary'</span> | <span class="tok-str">'secondary'</span> | <span class="tok-str">'ghost'</span>;
+  label: <span class="tok-val">string</span>;
+}
+
+<span class="tok-kw">export const</span> Button = forwardRef&lt;
+  HTMLButtonElement, ButtonProps
+&gt;(({ variant = <span class="tok-str">'primary'</span>, label }, ref) =&gt; {
+  <span class="tok-kw">const</span> classes = cn(
+    <span class="tok-str">'px-4 py-2 rounded-lg font-medium'</span>,
+    {
+      primary: <span class="tok-str">'bg-blue-600 text-white'</span>,
+      secondary: <span class="tok-str">'bg-gray-100 text-gray-900'</span>,
+    }[variant]
+  );
+
+  <span class="tok-kw">return</span> (
+    <span class="tok-tag">&lt;button</span> <span class="tok-attr">ref</span>={ref} <span class="tok-attr">className</span>={classes}<span class="tok-tag">&gt;</span>
+      <span class="tok-tag">&lt;span&gt;</span>{label}<span class="tok-tag">&lt;/span&gt;</span>
+    <span class="tok-tag">&lt;/button&gt;</span>
+  );
+});</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FEATURES ═══════════ -->
+<section id="features">
+  <div class="container">
+    <div class="section-label reveal">Features</div>
+    <div class="section-title reveal">Everything you need to ship UI everywhere.</div>
+    <div class="section-desc reveal">Built for teams that refuse to choose between consistency and developer experience.</div>
+
+    <div class="features-grid">
+      <div class="feature-card reveal">
+        <div class="feature-icon">{}</div>
+        <h3>Declarative-First</h3>
+        <p>YAML/JSON as the source of truth. No JSX, no framework-specific syntax. Readable by designers, PMs, and backend devs.</p>
+      </div>
+      <div class="feature-card reveal reveal-delay-1">
+        <div class="feature-icon" style="color:var(--cyan)">T</div>
+        <h3>Tailwind Native</h3>
+        <p>Classes resolved at build-time for every target. Shadow DOM support via Constructable Stylesheets. Zero runtime overhead.</p>
+      </div>
+      <div class="feature-card reveal reveal-delay-2">
+        <div class="feature-icon" style="color:var(--wc)">&lt;/&gt;</div>
+        <h3>Native Bindings</h3>
+        <p>Output is idiomatic for each framework — real React hooks, Vue Composition API, Svelte runes. Not wrappers around Web Components.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon" style="color:var(--ts)">TS</div>
+        <h3>End-to-End Types</h3>
+        <p>Props defined in YAML generate TypeScript interfaces for every target. Full autocomplete, full safety.</p>
+      </div>
+      <div class="feature-card reveal reveal-delay-1">
+        <div class="feature-icon" style="color:var(--vue)">&#10003;</div>
+        <h3>Declarative Tests</h3>
+        <p>Write tests in YAML alongside components. Compiled to vitest + testing-library and executed against all targets automatically.</p>
+      </div>
+      <div class="feature-card reveal reveal-delay-2">
+        <div class="feature-icon" style="color:var(--svelte)">&#9881;</div>
+        <h3>Plugin System</h3>
+        <p>Custom generators for any target — Flutter, SwiftUI, Kotlin Compose. The AST is your API.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ ECOSYSTEM ═══════════ -->
+<section id="ecosystem" style="padding:4rem 0;">
+  <div class="container" style="text-align:center;">
+    <div class="section-label reveal">Ecosystem</div>
+    <div class="section-title reveal">Modular by design.</div>
+    <div class="section-desc reveal" style="margin:0 auto 2.5rem;">Each part of the DeclareUI ecosystem lives in its own repo — use what you need, contribute where you want.</div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:0.75rem; max-width:800px; margin:0 auto;">
+      <a href="https://github.com/declare-ui/core" class="ai-connector reveal" style="text-decoration:none;color:inherit;">
+        <div class="ai-connector-icon" style="background:rgba(56,189,248,0.1);color:var(--sky);font-size:0.8rem;">&#9670;</div>
+        <div><h4>core</h4><p>Parser, AST, generators</p></div>
+      </a>
+      <a href="https://github.com/declare-ui/cli" class="ai-connector reveal reveal-delay-1" style="text-decoration:none;color:inherit;">
+        <div class="ai-connector-icon" style="background:rgba(168,85,247,0.1);color:var(--wc);font-size:0.8rem;">&gt;_</div>
+        <div><h4>cli</h4><p>Build, test, validate</p></div>
+      </a>
+      <a href="https://github.com/declare-ui/mcp" class="ai-connector reveal reveal-delay-2" style="text-decoration:none;color:inherit;">
+        <div class="ai-connector-icon" style="background:rgba(251,146,60,0.1);color:var(--svelte);font-size:0.8rem;">AI</div>
+        <div><h4>mcp</h4><p>AI agent connector</p></div>
+      </a>
+      <a href="https://github.com/declare-ui/components" class="ai-connector reveal" style="text-decoration:none;color:inherit;">
+        <div class="ai-connector-icon" style="background:rgba(74,222,128,0.1);color:var(--vue);font-size:0.8rem;">&#9632;</div>
+        <div><h4>components</h4><p>20+ UI components</p></div>
+      </a>
+      <a href="https://github.com/declare-ui/tailwind-plugin" class="ai-connector reveal reveal-delay-1" style="text-decoration:none;color:inherit;">
+        <div class="ai-connector-icon" style="background:rgba(6,182,212,0.1);color:var(--cyan);font-size:0.8rem;">T</div>
+        <div><h4>tailwind-plugin</h4><p>Tailwind integration</p></div>
+      </a>
+      <a href="https://github.com/declare-ui/vscode" class="ai-connector reveal reveal-delay-2" style="text-decoration:none;color:inherit;">
+        <div class="ai-connector-icon" style="background:rgba(59,130,246,0.1);color:var(--ts);font-size:0.8rem;">VS</div>
+        <div><h4>vscode</h4><p>IDE extension</p></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ AI & MCP ═══════════ -->
+<section class="ai-section" id="ai">
+  <div class="container">
+    <div class="ai-grid">
+      <div>
+        <div class="section-label reveal">AI-Powered</div>
+        <div class="section-title reveal">Build components with<br>natural language.</div>
+        <div class="section-desc reveal">DeclareUI ships with an MCP server and AI connectors that let agents like Claude create, modify, and document components through conversation.</div>
+
+        <div class="ai-connector reveal">
+          <div class="ai-connector-icon" style="background:rgba(251,146,60,0.1); color:var(--svelte);">MCP</div>
+          <div>
+            <h4>MCP Server</h4>
+            <p>Model Context Protocol — agents query docs, validate schemas, and generate YAML directly.</p>
+          </div>
+        </div>
+        <div class="ai-connector reveal reveal-delay-1">
+          <div class="ai-connector-icon" style="background:rgba(56,189,248,0.1); color:var(--sky);">C</div>
+          <div>
+            <h4>Claude Connector</h4>
+            <p>Native integration with Claude for component generation, review, and documentation.</p>
+          </div>
+        </div>
+        <div class="ai-connector reveal reveal-delay-2">
+          <div class="ai-connector-icon" style="background:rgba(74,222,128,0.1); color:var(--vue);">&#8644;</div>
+          <div>
+            <h4>IDE Extension</h4>
+            <p>VS Code autocomplete, inline preview, and AI-assisted editing for <code>.ui.yaml</code> files.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="ai-chat reveal">
+        <div class="ai-chat-header">
+          <div class="ai-avatar">&#9672;</div>
+          <span>Claude + DeclareUI MCP</span>
+          <small>via MCP</small>
+        </div>
+        <div class="ai-msg ai-msg--user">
+          Create a DataTable component with sorting, pagination, and a search filter. Use the secondary color scheme.
+        </div>
+        <div class="ai-msg ai-msg--assistant">
+          I'll generate that for you. Querying the DeclareUI schema for best practices...
+          <br><br>
+          Created <code>data-table.ui.yaml</code> with:
+          <br>&bull;&ensp;Props: <code>columns</code>, <code>data</code>, <code>pageSize</code>, <code>searchable</code>
+          <br>&bull;&ensp;State: <code>sortColumn</code>, <code>sortDir</code>, <code>currentPage</code>, <code>query</code>
+          <br>&bull;&ensp;Computed: sorted &rarr; filtered &rarr; paginated pipeline
+          <br>&bull;&ensp;Tests: 8 assertions covering sort, search, pagination
+          <br><br>
+          Ready to compile. Run <code>declareui build --targets react,vue</code>
+        </div>
+        <div class="ai-msg ai-msg--user">
+          Add an export to CSV button in the footer slot.
+        </div>
+        <div class="ai-msg ai-msg--assistant">
+          Done. Added a <code>footer</code> slot with a Button component using <code>$emit('export', { format: 'csv' })</code>. Schema validated. &#10003;
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ GET STARTED ═══════════ -->
+<section id="get-started">
+  <div class="container" style="text-align:center;">
+    <div class="section-label reveal">Get Started</div>
+    <div class="section-title reveal">Ready to declare your UI?</div>
+    <div class="section-desc reveal" style="margin:0 auto 2rem;">Install the CLI, init a project, and ship your first component in under 5 minutes.</div>
+    <div class="install-block reveal">
+      <div class="install-cmd">
+        <span class="prompt">$</span> npm install -g @declareui/cli
+      </div>
+    </div>
+    <div style="margin-top:2.5rem;" class="reveal">
+      <a href="https://github.com/declare-ui/core" class="btn-primary">Read the Docs &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer>
+  <div class="container">
+    <p>Built with care by the DeclareUI community. <a href="https://github.com/declare-ui">GitHub</a> &middot; <a href="#">Docs</a> &middot; MIT License</p>
+  </div>
+</footer>
+
+<!-- ═══════════ SCROLL REVEAL ═══════════ -->
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
