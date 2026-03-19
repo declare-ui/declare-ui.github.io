@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DeclareUI — Write once in YAML. Ship everywhere in native code.</title>
-  <meta name="description" content="Define UI components in YAML/JSON. Compile to React, Vue, Angular, Svelte, Web Components & vanilla JS/TS with native Tailwind support.">
-  <meta property="og:title" content="DeclareUI — Declarative UI Components for Every Framework">
-  <meta property="og:description" content="Write once in YAML. Ship everywhere in native code.">
+  <title>DeclareUI — Describe your UI. We'll build it.</title>
+  <meta name="description" content="Create professional UI components in simple YAML — no frontend expertise needed. Compile to React, Vue, Angular, Svelte, or Web Components.">
+  <meta property="og:title" content="DeclareUI — Describe your UI. We'll build it.">
+  <meta property="og:description" content="Create UI components in YAML. No frontend expertise needed. Compiles to React, Vue, Angular, Svelte, Web Components.">
   <meta property="og:type" content="website">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -98,7 +98,7 @@
       background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(14,165,233,0.06), transparent);
     }
     .hero-logo { margin-bottom: 2.5rem; }
-    .hero-logo svg { width: 200px; height: 200px; filter: drop-shadow(0 0 60px rgba(6,182,212,0.15)); }
+    .hero-logo svg { width: 220px; height: 220px; filter: drop-shadow(0 0 60px rgba(6,182,212,0.15)); }
     .hero-badge {
       display: inline-flex; align-items: center; gap: 0.5rem;
       padding: 0.35rem 1rem; border-radius: 100px; font-size: 0.8rem; font-weight: 500;
@@ -356,7 +356,7 @@
     <div class="nav-links">
       <a href="#how-it-works">How it Works</a>
       <a href="#features">Features</a>
-      <a href="#ai">AI &amp; MCP</a>
+      <a href="#ai">AI Builder</a>
       <a href="https://github.com/declare-ui" class="btn-github">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
         GitHub
@@ -369,39 +369,22 @@
 <section class="hero">
   <div class="container">
     <div class="hero-logo reveal">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
-        <g opacity="0.45">
-          <rect x="18" y="62" width="22" height="3" rx="1.5" fill="#94a3b8"/>
-          <rect x="24" y="70" width="16" height="3" rx="1.5" fill="#2563eb"/>
-          <rect x="24" y="78" width="12" height="3" rx="1.5" fill="#16a34a"/>
-          <rect x="24" y="86" width="20" height="3" rx="1.5" fill="#d97706"/>
-          <rect x="18" y="94" width="22" height="3" rx="1.5" fill="#94a3b8"/>
-          <rect x="24" y="102" width="14" height="3" rx="1.5" fill="#2563eb"/>
-          <rect x="24" y="110" width="18" height="3" rx="1.5" fill="#16a34a"/>
-          <rect x="18" y="118" width="22" height="3" rx="1.5" fill="#94a3b8"/>
-          <rect x="24" y="126" width="10" height="3" rx="1.5" fill="#d97706"/>
-        </g>
-        <line x1="52" y1="96" x2="66" y2="96" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
-        <g transform="translate(88, 96)">
-          <rect x="-20" y="-22" width="40" height="44" rx="6" fill="#f1f5f9" stroke="#2563eb" stroke-width="1.2"/>
-          <path d="M-8,-10 L2,0 L-8,10" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
-          <path d="M2,-10 L12,0 L2,10" fill="none" stroke="#0ea5e9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
-        </g>
-        <line x1="110" y1="80" x2="138" y2="46" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
-        <g transform="translate(150, 38)"><circle cx="0" cy="0" r="2.5" fill="#38bdf8"/><ellipse cx="0" cy="0" rx="10" ry="3.8" fill="none" stroke="#38bdf8" stroke-width="0.9" opacity="0.65"/><ellipse cx="0" cy="0" rx="10" ry="3.8" fill="none" stroke="#38bdf8" stroke-width="0.9" opacity="0.65" transform="rotate(60)"/><ellipse cx="0" cy="0" rx="10" ry="3.8" fill="none" stroke="#38bdf8" stroke-width="0.9" opacity="0.65" transform="rotate(-60)"/></g>
-        <line x1="110" y1="88" x2="140" y2="72" stroke="#4ade80" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
-        <g transform="translate(152, 68)"><path d="M0,-9 L7,5 L0,1 L-7,5 Z" fill="none" stroke="#22c55e" stroke-width="1.3"/></g>
-        <line x1="110" y1="96" x2="142" y2="98" stroke="#a78bfa" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
-        <g transform="translate(154, 98)"><polygon points="0,-8 7,-4 7,4 0,8 -7,4 -7,-4" fill="none" stroke="#8b5cf6" stroke-width="1.2"/></g>
-        <line x1="110" y1="104" x2="140" y2="122" stroke="#f87171" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
-        <g transform="translate(152, 126)"><path d="M0,-9 L8,7 L-8,7 Z" fill="none" stroke="#ef4444" stroke-width="1.3"/><line x1="-4.5" y1="3" x2="4.5" y2="3" stroke="#ef4444" stroke-width="0.8" opacity="0.6"/></g>
-        <line x1="110" y1="112" x2="138" y2="150" stroke="#fb923c" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
-        <g transform="translate(150, 158)"><path d="M3,-9 C9,-7 9,-1 3,1 C-3,3 -3,7 3,9" fill="none" stroke="#f97316" stroke-width="2" stroke-linecap="round"/></g>
+      <svg width="140" height="140" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="98" fill="#060a14"/>
+        <g opacity=".6"><rect x="18" y="62" width="22" height="3" rx="1.5" fill="#64748b"/><rect x="24" y="70" width="16" height="3" rx="1.5" fill="#7dd3fc"/><rect x="24" y="78" width="12" height="3" rx="1.5" fill="#86efac"/><rect x="24" y="86" width="20" height="3" rx="1.5" fill="#fbbf24"/><rect x="18" y="94" width="22" height="3" rx="1.5" fill="#64748b"/><rect x="24" y="102" width="14" height="3" rx="1.5" fill="#7dd3fc"/><rect x="24" y="110" width="18" height="3" rx="1.5" fill="#86efac"/><rect x="18" y="118" width="22" height="3" rx="1.5" fill="#64748b"/><rect x="24" y="126" width="10" height="3" rx="1.5" fill="#fbbf24"/></g>
+        <line x1="52" y1="96" x2="66" y2="96" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round" opacity=".4"/>
+        <g transform="translate(88,96)"><rect x="-20" y="-22" width="40" height="44" rx="6" fill="#0c1631" stroke="#1e3a8a" stroke-width="1.2"/><path d="M-8,-10 L2,0 L-8,10" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/><path d="M2,-10 L12,0 L2,10" fill="none" stroke="#0ea5e9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity=".6"/></g>
+        <line x1="110" y1="80" x2="138" y2="46" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round" opacity=".75"/><line x1="110" y1="88" x2="140" y2="72" stroke="#4ade80" stroke-width="1.8" stroke-linecap="round" opacity=".75"/><line x1="110" y1="96" x2="142" y2="98" stroke="#a78bfa" stroke-width="1.8" stroke-linecap="round" opacity=".75"/><line x1="110" y1="104" x2="140" y2="122" stroke="#f87171" stroke-width="1.8" stroke-linecap="round" opacity=".75"/><line x1="110" y1="112" x2="138" y2="150" stroke="#fb923c" stroke-width="1.8" stroke-linecap="round" opacity=".75"/>
+        <g transform="translate(150,38)"><circle cx="0" cy="0" r="2.5" fill="#38bdf8"/><ellipse cx="0" cy="0" rx="10" ry="3.8" fill="none" stroke="#38bdf8" stroke-width=".9" opacity=".7"/><ellipse cx="0" cy="0" rx="10" ry="3.8" fill="none" stroke="#38bdf8" stroke-width=".9" opacity=".7" transform="rotate(60)"/><ellipse cx="0" cy="0" rx="10" ry="3.8" fill="none" stroke="#38bdf8" stroke-width=".9" opacity=".7" transform="rotate(-60)"/></g>
+        <g transform="translate(152,68)"><path d="M0,-9 L7,5 L0,1 L-7,5 Z" fill="none" stroke="#4ade80" stroke-width="1.3"/></g>
+        <g transform="translate(154,98)"><polygon points="0,-8 7,-4 7,4 0,8 -7,4 -7,-4" fill="none" stroke="#a78bfa" stroke-width="1.2"/></g>
+        <g transform="translate(152,126)"><path d="M0,-9 L8,7 L-8,7 Z" fill="none" stroke="#f87171" stroke-width="1.3"/><line x1="-4.5" y1="3" x2="4.5" y2="3" stroke="#f87171" stroke-width=".8" opacity=".6"/></g>
+        <g transform="translate(150,158)"><path d="M3,-9 C9,-7 9,-1 3,1 C-3,3 -3,7 3,9" fill="none" stroke="#fb923c" stroke-width="2" stroke-linecap="round"/></g>
       </svg>
     </div>
     <div class="hero-badge reveal"><span class="dot"></span> Open Source &middot; MIT License</div>
-    <h1 class="reveal">Write once in YAML.<br>Ship everywhere in native code.</h1>
-    <p class="reveal">Define UI components declaratively in YAML or JSON. Compile to React, Vue, Angular, Svelte, Web Components and vanilla JS/TS — with Tailwind built in.</p>
+    <h1 class="reveal">Describe your UI.<br>We'll build it.</h1>
+    <p class="reveal">Create professional UI components in simple YAML — no frontend expertise needed. DeclareUI compiles them to production-ready React, Vue, Angular, Svelte, or Web Components.</p>
     <div class="hero-actions reveal">
       <a href="#how-it-works" class="btn-primary">Get Started &rarr;</a>
       <a href="https://github.com/declare-ui" class="btn-secondary">
@@ -424,26 +407,26 @@
 <section id="how-it-works">
   <div class="container">
     <div class="section-label reveal">How it Works</div>
-    <div class="section-title reveal">Three steps. Every framework.</div>
-    <div class="section-desc reveal">One YAML file becomes native, idiomatic components for every target — not wrappers, not hacks.</div>
+    <div class="section-title reveal">From idea to production. No frontend required.</div>
+    <div class="section-desc reveal">Describe what you want in YAML. DeclareUI handles the rest.</div>
 
     <div class="flow">
       <div class="flow-step reveal">
-        <div class="flow-step-num">01 &mdash; Define</div>
-        <h3>Declare in YAML</h3>
-        <p>Props, state, events, Tailwind classes, slots, lifecycle, and even tests — all in a single <code>.ui.yaml</code> file.</p>
+        <div class="flow-step-num">01 &mdash; Describe</div>
+        <h3>Write what you want</h3>
+        <p>Props, layout, Tailwind styles, and behavior — in readable YAML. If you can describe it, you can build it. Or let AI describe it for you.</p>
       </div>
       <div class="flow-arrow reveal reveal-delay-1">&rarr;</div>
       <div class="flow-step reveal reveal-delay-1">
-        <div class="flow-step-num">02 &mdash; Compile</div>
-        <h3>Run the CLI</h3>
-        <p>The DeclareUI compiler parses, validates, optimizes, and generates code for each target in parallel. Tailwind is resolved at build-time.</p>
+        <div class="flow-step-num">02 &mdash; Preview</div>
+        <h3>See it live instantly</h3>
+        <p>The playground renders your component in real-time. Tweak the YAML, see the result. No build step, no config, no framework knowledge needed.</p>
       </div>
       <div class="flow-arrow reveal reveal-delay-2">&rarr;</div>
       <div class="flow-step reveal reveal-delay-2">
         <div class="flow-step-num">03 &mdash; Ship</div>
-        <h3>Use native components</h3>
-        <p>Import a real React component, a Vue SFC, a Svelte component, or a Custom Element. Full TypeScript types included.</p>
+        <h3>Export to any framework</h3>
+        <p>DeclareUI generates native, production-ready code for whatever framework your team uses. React, Vue, Svelte, Angular, or Web Components.</p>
       </div>
     </div>
   </div>
@@ -520,12 +503,53 @@
   </div>
 </section>
 
+<!-- ═══════════ WHO IS IT FOR ═══════════ -->
+<section id="for-who" style="padding: 5rem 0;">
+  <div class="container" style="text-align:center;">
+    <div class="section-label reveal">Who is it for?</div>
+    <div class="section-title reveal">You don't need to be a frontend expert.</div>
+    <div class="section-desc reveal" style="margin:0 auto 3rem;">DeclareUI breaks the barrier between "knowing what you want" and "knowing how to build it."</div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:1.25rem; max-width:900px; margin:0 auto;">
+      <div class="feature-card reveal" style="text-align:left;">
+        <div style="font-size:1.5rem; margin-bottom:0.75rem;">&#128295;</div>
+        <h3 style="font-size:1rem;">Backend devs</h3>
+        <p>"I need a UI but I don't speak React."</p>
+      </div>
+      <div class="feature-card reveal reveal-delay-1" style="text-align:left;">
+        <div style="font-size:1.5rem; margin-bottom:0.75rem;">&#128640;</div>
+        <h3 style="font-size:1rem;">Indie hackers</h3>
+        <p>"I want to prototype fast without framework lock-in."</p>
+      </div>
+      <div class="feature-card reveal reveal-delay-2" style="text-align:left;">
+        <div style="font-size:1.5rem; margin-bottom:0.75rem;">&#127912;</div>
+        <h3 style="font-size:1rem;">Designers</h3>
+        <p>"I know Tailwind. I just can't wire up the React part."</p>
+      </div>
+      <div class="feature-card reveal" style="text-align:left;">
+        <div style="font-size:1.5rem; margin-bottom:0.75rem;">&#128203;</div>
+        <h3 style="font-size:1rem;">Product managers</h3>
+        <p>"I want to contribute components, not just write specs."</p>
+      </div>
+      <div class="feature-card reveal reveal-delay-1" style="text-align:left;">
+        <div style="font-size:1.5rem; margin-bottom:0.75rem;">&#129302;</div>
+        <h3 style="font-size:1rem;">AI-assisted</h3>
+        <p>"I described what I wanted and Claude built it."</p>
+      </div>
+      <div class="feature-card reveal reveal-delay-2" style="text-align:left;">
+        <div style="font-size:1.5rem; margin-bottom:0.75rem;">&#9881;&#65039;</div>
+        <h3 style="font-size:1rem;">Frontend teams</h3>
+        <p>"One YAML source, every framework our clients use."</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ═══════════ FEATURES ═══════════ -->
 <section id="features">
   <div class="container">
     <div class="section-label reveal">Features</div>
-    <div class="section-title reveal">Everything you need to ship UI everywhere.</div>
-    <div class="section-desc reveal">Built for teams that refuse to choose between consistency and developer experience.</div>
+    <div class="section-title reveal">Simple for humans. Powerful under the hood.</div>
+    <div class="section-desc reveal">YAML you can read. Code your team can ship. No compromises.</div>
 
     <div class="features-grid">
       <div class="feature-card reveal">
@@ -602,9 +626,9 @@
   <div class="container">
     <div class="ai-grid">
       <div>
-        <div class="section-label reveal">AI-Powered</div>
-        <div class="section-title reveal">Build components with<br>natural language.</div>
-        <div class="section-desc reveal">DeclareUI ships with an MCP server and AI connectors that let agents like Claude create, modify, and document components through conversation.</div>
+        <div class="section-label reveal">The easiest way</div>
+        <div class="section-title reveal">Just tell AI what<br>you need.</div>
+        <div class="section-desc reveal">Don't want to write YAML? No problem. Describe your component in plain language — AI generates the YAML, DeclareUI compiles the code. The fastest path from idea to production UI.</div>
 
         <div class="ai-connector reveal">
           <div class="ai-connector-icon" style="background:rgba(251,146,60,0.1); color:var(--svelte);">MCP</div>
@@ -664,8 +688,8 @@
 <section id="get-started">
   <div class="container" style="text-align:center;">
     <div class="section-label reveal">Get Started</div>
-    <div class="section-title reveal">Ready to declare your UI?</div>
-    <div class="section-desc reveal" style="margin:0 auto 2rem;">Install the CLI, init a project, and ship your first component in under 5 minutes.</div>
+    <div class="section-title reveal">Ready to build UI without the complexity?</div>
+    <div class="section-desc reveal" style="margin:0 auto 2rem;">Install the CLI and ship your first component in under 5 minutes. No framework knowledge needed.</div>
     <div class="install-block reveal">
       <div class="install-cmd">
         <span class="prompt">$</span> npm install -g @declareui/cli
